@@ -29,7 +29,7 @@ def get_brats_dataset(data_path):
     data = []
     for subject in os.listdir(data_path):
         sub_path = os.path.join(data_path, subject)
-        if os.path.exists(sub_path) == False: continue
+        if os.path.exists(sub_path) == False or os.path.isdir(sub_path) is False: continue
         t1 = os.path.join(sub_path, f"{subject}_t1.nii") 
         t1ce = os.path.join(sub_path, f"{subject}_t1ce.nii") 
         t2 = os.path.join(sub_path, f"{subject}_t2.nii") 

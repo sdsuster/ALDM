@@ -1,6 +1,7 @@
 import argparse, os, sys, datetime, glob, importlib
 from omegaconf import OmegaConf
 import numpy as np
+import comet_ml
 from PIL import Image
 import nibabel as nib
 import torch
@@ -581,11 +582,14 @@ if __name__ == "__main__":
                 "params": {
                     "api_key": os.getenv('COMET_API_KEY'),
                     "project_name": "ALDM",
-                    "save_dir": logdir,
                 }
             }
         }
-        default_logger_cfg = default_logger_cfgs["testtube"]
+        if "default_logger" in lightning_config:
+            default_logger_cfg = default_logger_cfgs[lightning_config.default_logger]
+        else:
+            default_logger_cfg = default_logger_cfgs["testtube"]
+
         if "logger" in lightning_config:
             logger_cfg = lightning_config.logger
         else:
