@@ -189,7 +189,7 @@ class SetupCallback(Callback):
         self.config = config
         self.lightning_config = lightning_config
 
-    def on_pretrain_routine_start(self, trainer, pl_module):
+    def on_fit_start(self, trainer, pl_module):
         if trainer.global_rank == 0:
             # Create logdirs and save configs
             os.makedirs(self.logdir, exist_ok=True)
@@ -576,6 +576,13 @@ if __name__ == "__main__":
                     "save_dir": logdir,
                 }
             },
+            "comet-ml":{
+                "target": "pytorch_lightning.loggers.CometLogger",
+                "params": {
+                    "api_key": os.getenv('COMET_API_KEY'),
+                    "project_name": "LDM"
+                }
+            }
         }
         default_logger_cfg = default_logger_cfgs["testtube"]
         if "logger" in lightning_config:
