@@ -9,8 +9,8 @@ brats_transforms = transforms.Compose(
     [
         transforms.LoadImaged(keys=["t1", "t1ce", "t2", "flair"], allow_missing_keys=True),
         transforms.EnsureChannelFirstd(keys=["t1", "t1ce", "t2", "flair"], allow_missing_keys=True),
-        transforms.Lambdad(keys=["t1", "t1ce", "t2", "flair"], func=lambda x: x[0, :, :, :]),
-        transforms.AddChanneld(keys=["t1", "t1ce", "t2", "flair"]),
+        # transforms.Lambdad(keys=["t1", "t1ce", "t2", "flair"], func=lambda x: x[0, :, :, :]),
+        # transforms.AddChanneld(keys=["t1", "t1ce", "t2", "flair"]),
         transforms.EnsureTyped(keys=["t1", "t1ce", "t2", "flair"]),
         transforms.Orientationd(keys=["t1", "t1ce", "t2", "flair"], axcodes="RAI", allow_missing_keys=True),
         transforms.CropForegroundd(keys=["t1", "t1ce", "t2", "flair"], source_key="t1", allow_missing_keys=True),
@@ -31,11 +31,11 @@ def get_brats_dataset(data_path):
     for subject in os.listdir(data_path):
         sub_path = os.path.join(data_path, subject)
         if os.path.exists(sub_path) == False: continue
-        t1 = os.path.join(sub_path, f"{subject}_t1.nii.gz") 
-        t1ce = os.path.join(sub_path, f"{subject}_t1ce.nii.gz") 
-        t2 = os.path.join(sub_path, f"{subject}_t2.nii.gz") 
-        flair = os.path.join(sub_path, f"{subject}_flair.nii.gz") 
-        seg = os.path.join(sub_path, f"{subject}_seg.nii.gz")
+        t1 = os.path.join(sub_path, f"{subject}_t1.nii") 
+        t1ce = os.path.join(sub_path, f"{subject}_t1ce.nii") 
+        t2 = os.path.join(sub_path, f"{subject}_t2.nii") 
+        flair = os.path.join(sub_path, f"{subject}_flair.nii") 
+        seg = os.path.join(sub_path, f"{subject}_seg.nii")
 
         data.append({"t1":t1, "t1ce":t1ce, "t2":t2, "flair":flair, "subject_id": subject})
                     

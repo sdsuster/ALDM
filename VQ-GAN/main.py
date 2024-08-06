@@ -470,7 +470,6 @@ if __name__ == "__main__":
         logger_cfg = lightning_config.logger or OmegaConf.create() # 
         logger_cfg = OmegaConf.merge(default_logger_cfg, logger_cfg)
         trainer_kwargs["logger"] = instantiate_from_config(logger_cfg)
-
         # modelcheckpoint - use TrainResult/EvalResult(checkpoint_on=metric) to
         # specify which metric is used to determine best models
         default_modelckpt_cfg = {
@@ -525,9 +524,10 @@ if __name__ == "__main__":
         callbacks_cfg = OmegaConf.merge(default_callbacks_cfg, callbacks_cfg)
         trainer_kwargs["callbacks"] = [instantiate_from_config(callbacks_cfg[k]) for k in callbacks_cfg]
         
-        from pytorch_lightning.plugins import DDPPlugin
-        trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs,
-                                             plugins=DDPPlugin(find_unused_parameters=True),)
+        # from pytorch_lightning.plugins import DDPPlugin
+        # trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs,
+        #                                      plugins=DDPPlugin(find_unused_parameters=True),)
+        trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
 
         # data
         data = instantiate_from_config(config.data)
@@ -562,16 +562,16 @@ if __name__ == "__main__":
             if trainer.global_rank == 0:
                 import pudb; pudb.set_trace()
 
-        import signal
-        signal.signal(signal.SIGUSR1, melk)
-        signal.signal(signal.SIGUSR2, divein)
+        # import signal
+        # signal.signal(signal.SIGUSR1, melk)
+        # signal.signal(signal.SIGUSR2, divein)
 
         # run
         if opt.train:
             try:
                 trainer.fit(model, data)
             except Exception:
-                melk()
+                # melk()
                 raise
         if not opt.no_test and not trainer.interrupted:
             trainer.test(model, data)
