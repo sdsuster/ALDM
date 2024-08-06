@@ -580,7 +580,8 @@ if __name__ == "__main__":
                 "target": "pytorch_lightning.loggers.CometLogger",
                 "params": {
                     "api_key": os.getenv('COMET_API_KEY'),
-                    "project_name": "LDM"
+                    "project_name": "ALDM",
+                    "save_dir": logdir,
                 }
             }
         }

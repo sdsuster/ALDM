@@ -2,3 +2,4 @@ logs
 lightning_logs
 dist
 *__pycache__*
+.env
