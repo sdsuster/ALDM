@@ -133,8 +133,8 @@ class VQModel(pl.LightningModule):
         rec_loss = log_dict_ae["val/rec_loss"]
         # self.log("val/rec_loss", rec_loss,
         #            prog_bar=True, logger=True, on_step=True, on_epoch=True, sync_dist=True)
-        # self.log("val/aeloss", aeloss,
-        #            prog_bar=True, logger=True, on_step=True, on_epoch=True, sync_dist=True)
+        self.log("val/aeloss", aeloss,
+                   prog_bar=True, logger=True, on_step=True, on_epoch=True, sync_dist=True)
         self.log_dict(log_dict_ae)
         self.log_dict(log_dict_disc)
         return self.log_dict
