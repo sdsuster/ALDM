@@ -168,9 +168,10 @@ class VQModel(pl.LightningModule):
             assert xrec.shape[1] > 3
             x_src = self.to_rgb(x_src)
             xrec = self.to_rgb(xrec)
-        log["source"] = x_src
-        log["target"] = x_tar
-        log[f"recon_{source}_to_{target}"] = xrec
+            
+        log["source"] = x_src[:, :, :, :, 30]
+        log["target"] = x_tar[:, :, :, :, 30]
+        log[f"recon_{source}_to_{target}"] = xrec[:, :, :, :, 30]
         return log
 
     def to_rgb(self, x):

@@ -634,7 +634,8 @@ if __name__ == "__main__":
                 "params": {
                     "batch_frequency": 750,
                     "max_images": 4,
-                    "clamp": True
+                    "clamp": True,
+                    "save_dir" : logdir
                 }
             },
             "learning_rate_logger": {
